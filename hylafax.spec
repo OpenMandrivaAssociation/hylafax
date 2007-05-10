@@ -5,25 +5,27 @@
 
 Summary:	HylaFAX(tm) is a sophisticated enterprise strength fax package
 Name:		hylafax
-Version:	5.0.2
+Version:	5.1.3
 Release:	%mkrel 1
 License: 	LGPL-style
 Group:		Communications
 URL: 		http://hylafax.sourceforge.net/
-Source0:	http://prdownloads.sourceforge.net/hylafax/%{name}-%{version}.tar.bz2
+Source0:	http://prdownloads.sourceforge.net/hylafax/%{name}-%{version}.tar.gz
 Source1:	hylafax-v4.1-cron_entries.tar.bz2
 Source2:	hylafax-v4.1-defaults.tar.bz2
 Source3:	hylafax-v4.1-dialrules_extras.tar.bz2
-Source6: 	hylafax-v4.1-logrotate.bz2
-Source7:	hylafax-v4.1.1-init.bz2
-Source8:  	hylafax-v4.1.1-hyla.conf.bz2
-Patch7:		hylafax-no_rpath.diff
+Source6: 	hylafax-v4.1-logrotate
+Source7:	hylafax-v4.1.1-init
+Source8:  	hylafax-v4.1.1-hyla.conf
 #This just makes it use position independant code (-fPIC) while building.  We should push this back to Darren.
 Patch0:		hylafax-v4.1.1-shlib-pic.chris.patch
 Patch1:		hylafax-4.1.8-ghostscript-location
 Patch3:		hylafax-4.2.5.2-soname.diff
 Patch5:		hylafax-4.2.1-deps.patch
 Patch6:		hylafax-4.2.2-ghostscript_fonts.patch
+Patch7:		hylafax-no_rpath.diff
+Patch8:		hylafax-libdata.diff
+Patch9:		hylafax-mailfax.diff
 Requires:	ghostscript >= 7.07
 Requires:	gawk >= 3.0.6
 Requires:	MailTransportAgent
@@ -133,9 +135,15 @@ This is the shared librairies of HylaFAX.
 %patch5 -p1 -b .deps
 %patch6 -p1 -b .ghostscript
 %patch7 -p0 -b .no_rpath
+%patch8 -p1 -b .libdata
+%patch9 -p1 -b .mailfax
 
 # path fix
 perl -pi -e "s|/usr/local/lib|%{_libdir}|g" configure
+
+cp %{SOURCE6} hylafax-server.logrotate
+cp %{SOURCE7} hylafax-server.init
+cp %{SOURCE8} hyla.conf
 
 %build
 %{?__cputoolize: %{__cputoolize}}
@@ -224,23 +232,21 @@ perl -pi -e 's!/usr/lib/aliases!/etc/aliases!g' %{buildroot}%{_sbindir}/faxsetup
 [ -f root.sh ] && sh root.sh
 
 # init
-bzcat %{SOURCE7} > %{buildroot}%{_initrddir}/hylafax-server
-chmod 755 %{buildroot}%{_initrddir}/hylafax-server
+install -m0755 hylafax-server.init %{buildroot}%{_initrddir}/hylafax-server
 
 # defaults - Disabling this: the defaults are ancient
 #install -m 644 defaults/* %{buildroot}%{faxspool}/config/defaults/
 
 # hyla.conf - Need a new default - this one just sets fine mode 
 #leaving it since it doesn't hurt
-bzcat %{SOURCE8} > %{buildroot}%{_datadir}/fax/hyla.conf
-chmod 644 %{buildroot}%{_datadir}/fax/hyla.conf
+install -m0644 hyla.conf %{buildroot}%{_datadir}/fax/hyla.conf
 
 # cron entries - These seem fine
 install -m 755 hylafax_daily.cron  %{buildroot}%{_sysconfdir}/cron.daily/hylafax
 install -m 755 hylafax_hourly.cron %{buildroot}%{_sysconfdir}/cron.hourly/hylafax
 
 # logrotate
-bzcat %{SOURCE6} > %{buildroot}%{_sysconfdir}/logrotate.d/hylafax-server
+install -m0644 hylafax-server.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/hylafax-server
 
 # dialrules extras - Darren says the dialrules haven't changed
 install -m 644 dialrules_extras/dialrules* %{buildroot}%{faxspool}/etc
@@ -266,6 +272,12 @@ cat > README.urpmi << EOF
 #                                                       #
 #########################################################
 EOF
+
+# install the mailfax stuff
+install -m0755 faxmail/mailfax.sh-postfix %{buildroot}%{_bindir}/
+install -m0755 faxmail/mailfax.sh-qmail %{buildroot}%{_bindir}/
+install -m0755 faxmail/mailfax.sh-sendmail %{buildroot}%{_bindir}/
+install -m0755 faxmail/mailfax.sh-smail %{buildroot}%{_bindir}/
 
 %post client
 %{_sbindir}/faxsetup -client
@@ -382,6 +394,7 @@ rm -rf %buildroot
 
 %files client
 %defattr(-,root,root)
+%doc faxmail/README
 %{_bindir}/sendfax
 %{_bindir}/sendpage
 %{_bindir}/faxstat
@@ -389,6 +402,10 @@ rm -rf %buildroot
 %{_bindir}/faxcover
 %{_bindir}/faxmail
 %{_bindir}/faxrm
+%{_bindir}/mailfax.sh-postfix
+%{_bindir}/mailfax.sh-qmail
+%{_bindir}/mailfax.sh-sendmail
+%{_bindir}/mailfax.sh-smail
 %{_sbindir}/textfmt
 %{_sbindir}/edit-faxcover
 %{_datadir}/fax/pagesizes
@@ -396,6 +413,12 @@ rm -rf %buildroot
 %{_datadir}/fax/faxcover_example_sgi.ps
 %{_datadir}/fax/typerules
 %{_datadir}/fax/hyla.conf
+%dir %{_datadir}/fax/faxmail
+%dir %{_datadir}/fax/faxmail/application
+%dir %{_datadir}/fax/faxmail/image
+%{_datadir}/fax/faxmail/application/octet-stream
+%{_datadir}/fax/faxmail/application/pdf
+%{_datadir}/fax/faxmail/image/tiff
 %{_mandir}/man1/*
 
 %files -n %{libname}
@@ -407,5 +430,3 @@ rm -rf %buildroot
 %defattr(-,root,root)
 %doc COPYRIGHT
 %{_libdir}/*.so
-
-
