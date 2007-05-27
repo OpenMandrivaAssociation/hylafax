@@ -6,7 +6,7 @@
 Summary:	HylaFAX(tm) is a sophisticated enterprise strength fax package
 Name:		hylafax
 Version:	5.1.4
-Release:	%mkrel 3
+Release:	%mkrel 4
 License: 	LGPL-style
 Group:		Communications
 URL: 		http://hylafax.sourceforge.net/
@@ -298,14 +298,7 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 
 %preun server
 %_preun_service hylafax-server
-if [ $1 = 0 ] ; then
-	# Removing faxgetty entries in %{_sysconfdir}/inittab
-	perl -pi -e 's!^.*faxgetty.*$!!g' %{_sysconfdir}/inittab > %{_sysconfdir}/inittab.$$
-	/sbin/init q
-fi
 
-#%postun server
-#if [ $1 = 2 ]; then	/sbin/service hylafax condrestart >/dev/null 2>&1; fi
 
 %post -n %{libname} -p /sbin/ldconfig
 
