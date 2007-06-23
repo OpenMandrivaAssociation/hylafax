@@ -5,8 +5,8 @@
 
 Summary:	HylaFAX(tm) is a sophisticated enterprise strength fax package
 Name:		hylafax
-Version:	5.1.4
-Release:	%mkrel 4
+Version:	5.1.5
+Release:	%mkrel 1
 License: 	LGPL-style
 Group:		Communications
 URL: 		http://hylafax.sourceforge.net/
