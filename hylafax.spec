@@ -20,7 +20,7 @@ Source8:  	hylafax-v4.1.1-hyla.conf
 #This just makes it use position independant code (-fPIC) while building.  We should push this back to Darren.
 Patch0:		hylafax-v4.1.1-shlib-pic.chris.patch
 Patch1:		hylafax-4.1.8-ghostscript-location
-Patch3:		hylafax-4.2.5.2-soname.diff
+Patch3:		hylafax-soname.diff
 Patch5:		hylafax-4.2.1-deps.patch
 Patch6:		hylafax-4.2.2-ghostscript_fonts.patch
 Patch7:		hylafax-no_rpath.diff
