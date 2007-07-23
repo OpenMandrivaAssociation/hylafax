@@ -20,6 +20,7 @@ Source8:  	hylafax-v4.1.1-hyla.conf
 #This just makes it use position independant code (-fPIC) while building.  We should push this back to Darren.
 Patch0:		hylafax-v4.1.1-shlib-pic.chris.patch
 Patch1:		hylafax-4.1.8-ghostscript-location
+Patch2:		hylafax-LIBVERSION.diff
 Patch3:		hylafax-soname.diff
 Patch5:		hylafax-4.2.1-deps.patch
 Patch6:		hylafax-4.2.2-ghostscript_fonts.patch
@@ -131,6 +132,7 @@ This is the shared librairies of HylaFAX.
 %patch0 -p1
 %patch1 -p1
 # (oe) set the soname
+%patch2 -p1 -b .LIBVERSION
 %patch3 -p0 -b .soname
 %patch5 -p1 -b .deps
 %patch6 -p1 -b .ghostscript
@@ -146,10 +148,15 @@ cp %{SOURCE7} hylafax-server.init
 cp %{SOURCE8} hyla.conf
 
 %build
+%serverbuild
+
 %{?__cputoolize: %{__cputoolize}}
 # - Can't use the configure macro because does not understand --prefix
 # - A patch makes configure not to ask for a confirmation. An alternative would
 #   be to use --quiet, but this way all the configure output would be hidden
+
+export STRIP="/bin/true"
+
 ./configure \
 	--target=%{_target_platform} \
 	--with-DIR_BIN=%{_bindir} \
@@ -183,10 +190,9 @@ cp %{SOURCE8} hyla.conf
 # standard way would break things. Since OPTIMIZER is included in CFLAGS
 # by the HylaFAX configure system, it's used here in place of CFLAGS
 #make CFLAGS="$RPM_OPT_FLAGS"
-%make OPTIMIZER="%{optflags}"
+%make OPTIMIZER="$CFLAGS"
 
 %install
-#find -name CVS|xargs rm -fr
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 install -d -m 755 %{buildroot}%{_sysconfdir}/{logrotate.d,cron.hourly,cron.daily}
@@ -197,7 +203,6 @@ install -d -m 755 %{buildroot}%{_libdir}
 install -d -m 755 %{buildroot}%{_datadir}/fax
 install -d -m 755 %{buildroot}%{faxspool}/{etc,config/defaults,bin}
 install -d -m 755 %{buildroot}%{_mandir}/{man1,man5,man8}
-
 
 # install: binaries and man pages
 # FAXUSER, FAXGROUP, SYSUSER and SYSGROUP are set to the current user to
@@ -298,7 +303,6 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 
 %preun server
 %_preun_service hylafax-server
-
 
 %post -n %{libname} -p /sbin/ldconfig
 
