@@ -1,11 +1,12 @@
 %define major 5
-%define libname %mklibname %name %major
+%define libname %mklibname %{name} %{major}
+%define develname %mklibname -d %{name}
 
 %define faxspool    %{_var}/spool/fax
 
 Summary:	HylaFAX(tm) is a sophisticated enterprise strength fax package
 Name:		hylafax
-Version:	5.1.6
+Version:	5.1.7
 Release:	%mkrel 1
 License: 	LGPL-style
 Group:		Communications
@@ -41,17 +42,15 @@ Obsoletes:	hylafax-mailgateway
 Epoch:		1
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}buildroot
 
-
 %description
-HylaFAX(tm) is a sophisticated enterprise-strength fax package for
-class 1 and 2 fax modems on unix systems. It provides spooling
-services and numerous supporting fax management tools. 
-The fax clients may reside on machines different from the server
-and client implementations exist for a number of platforms including 
-windows.
+HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
+2 fax modems on unix systems. It provides spooling services and numerous
+supporting fax management tools. The fax clients may reside on machines
+different from the server and client implementations exist for a number of
+platforms including windows.
 
-You need this package if you are going to install hylafax-client
-and/or hylafax server.
+You need this package if you are going to install hylafax-client and/or hylafax
+server.
 
 Most users want mgetty-voice to be installed too.
 
@@ -64,12 +63,11 @@ Requires:	%{name}
 Requires:	%{libname} = %{epoch}:%{version}
 
 %description server
-HylaFAX(tm) is a sophisticated enterprise-strength fax package for
-class 1 and 2 fax modems on unix systems. It provides spooling
-services and numerous supporting fax management tools.
-The fax clients may reside on machines different from the server
-and client implementations exist for a number of platforms including
-windows.
+HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
+2 fax modems on unix systems. It provides spooling services and numerous
+supporting fax management tools. The fax clients may reside on machines
+different from the server and client implementations exist for a number of
+platforms including windows.
 
 This is the server portion of HylaFAX.
 
@@ -82,12 +80,11 @@ Requires: 	%{name}
 Requires: 	%{libname} = %{epoch}:%{version}
 
 %description	client
-HylaFAX(tm) is a sophisticated enterprise-strength fax package for
-class 1 and 2 fax modems on unix systems. It provides spooling
-services and numerous supporting fax management tools.
-The fax clients may reside on machines different from the server
-and client implementations exist for a number of platforms including
-windows.
+HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
+2 fax modems on unix systems. It provides spooling services and numerous
+supporting fax management tools. The fax clients may reside on machines
+different from the server and client implementations exist for a number of
+platforms including windows.
 
 This is the client portion of HylaFAX.
 
@@ -96,35 +93,34 @@ Summary:	Hylafax libraries
 Group:		Communications
 
 %description -n %{libname}
-HylaFAX(tm) is a sophisticated enterprise-strength fax package for 
-class 1 and 2 fax modems on unix systems. It provides spooling
-services and numerous supporting fax management tools. 
-The fax clients may reside on machines different from the server
-and client implementations exist for a number of platforms including 
-windows.
+HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
+2 fax modems on unix systems. It provides spooling services and numerous
+supporting fax management tools. The fax clients may reside on machines
+different from the server and client implementations exist for a number of
+platforms including windows.
 
 This is the shared librairies of HylaFAX.
 
-%package -n	%{libname}-devel
-Summary:	Hylafax libraries
-Group:		Development/Other
+%package -n	%{develname}
+Summary:	Hylafax Development libraries
+Group:		Development/C
 Requires:	%{libname} = %{epoch}:%{version}
-Provides:	lib%{name}-devel = %{epoch}:%{version}
 Provides:	%{name}-devel = %{epoch}:%{version}
+Provides:	%{libname}-devel = %{epoch}:%{version}-%{release}
+Obsoletes:	%{libname}-devel
 Conflicts:	%{mklibname hylafax 4.1.1}-devel
 Conflicts:	%{mklibname hylafax 4.2.0}-devel
 Conflicts:	%{mklibname hylafax 4.2.2}-devel
 Conflicts:	%{mklibname hylafax 4.2.5}-devel
 
-%description -n	%{libname}-devel
-HylaFAX(tm) is a sophisticated enterprise-strength fax package for
-class 1 and 2 fax modems on unix systems. It provides spooling
-services and numerous supporting fax management tools.
-The fax clients may reside on machines different from the server
-and client implementations exist for a number of platforms including
-windows.
+%description -n	%{develname}
+HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
+2 fax modems on unix systems. It provides spooling services and numerous
+supporting fax management tools. The fax clients may reside on machines
+different from the server and client implementations exist for a number of
+platforms including windows.
 
-This is the shared librairies of HylaFAX.
+This is the development librairies for HylaFAX.
 
 %prep
 
@@ -423,7 +419,7 @@ rm -rf %buildroot
 %doc COPYRIGHT
 %{_libdir}/*.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(-,root,root)
 %doc COPYRIGHT
 %{_libdir}/*.so
