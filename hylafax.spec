@@ -6,8 +6,8 @@
 
 Summary:	HylaFAX(tm) is a sophisticated enterprise strength fax package
 Name:		hylafax
-Version:	5.1.7
-Release:	%mkrel 2
+Version:	5.1.8
+Release:	%mkrel 1
 License: 	LGPL-style
 Group:		Communications
 URL: 		http://hylafax.sourceforge.net/
@@ -36,6 +36,7 @@ BuildRequires: 	libjpeg-devel
 BuildRequires: 	libtiff-devel >= 3.5.7
 BuildRequires: 	zlib-devel
 BuildRequires: 	libpam-devel
+BuildRequires: 	jbig-devel
 Conflicts:	mgetty-sendfax
 Provides:	hylafax-mailgateway
 Obsoletes:	hylafax-mailgateway
