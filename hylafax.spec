@@ -6,7 +6,7 @@
 
 Summary:	HylaFAX(tm) is a sophisticated enterprise strength fax package
 Name:		hylafax
-Version:	5.1.8
+Version:	5.1.9
 Release:	%mkrel 1
 License: 	LGPL-style
 Group:		Communications
@@ -26,7 +26,6 @@ Patch3:		hylafax-soname.diff
 Patch5:		hylafax-4.2.1-deps.patch
 Patch6:		hylafax-4.2.2-ghostscript_fonts.patch
 Patch7:		hylafax-no_rpath.diff
-Patch8:		hylafax-libdata.diff
 Patch9:		hylafax-mailfax.diff
 Requires:	ghostscript >= 7.07
 Requires:	gawk >= 3.0.6
@@ -135,7 +134,6 @@ This is the development librairies for HylaFAX.
 %patch5 -p1 -b .deps
 %patch6 -p1 -b .ghostscript
 %patch7 -p0 -b .no_rpath
-%patch8 -p1 -b .libdata
 %patch9 -p1 -b .mailfax
 
 # path fix
