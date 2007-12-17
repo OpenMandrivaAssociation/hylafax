@@ -40,7 +40,6 @@ Conflicts:	mgetty-sendfax
 Provides:	hylafax-mailgateway
 Obsoletes:	hylafax-mailgateway
 Epoch:		1
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}buildroot
 
 %description
 HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
