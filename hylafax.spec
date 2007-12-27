@@ -6,7 +6,7 @@
 
 Summary:	HylaFAX(tm) is a sophisticated enterprise strength fax package
 Name:		hylafax
-Version:	5.1.12
+Version:	5.2.0
 Release:	%mkrel 1
 License: 	LGPL-style
 Group:		Communications
@@ -201,7 +201,7 @@ install -d -m 755 %{buildroot}%{_mandir}/{man1,man5,man8}
 
 # install: binaries and man pages
 # FAXUSER, FAXGROUP, SYSUSER and SYSGROUP are set to the current user to
-# avoid warnings about chown/chgrp if the user building the SRPM is not root; 
+# avoid warnings about chown/chgrp if the user building the SRPM is not root;
 # they are set to the correct values with the RPM attr macro
 %makeinstall -e \
 	FAXUSER=`id -u` \
@@ -223,7 +223,7 @@ perl -pi -e 's!/usr/lib/aliases!/etc/aliases!g' %{buildroot}%{_sbindir}/faxsetup
 
 # Starting from 4.1.6, port/install.sh won't chown/chmod anymore if the current
 # user is not root; instead a file root.sh is created with chown/chmod inside.
-# 
+#
 # If you build the rpm as normal user (not root) you get an rpm with all the
 # permissions messed up and hylafax will give various weird errors.
 #
@@ -237,7 +237,7 @@ install -m0755 hylafax-server.init %{buildroot}%{_initrddir}/hylafax-server
 # defaults - Disabling this: the defaults are ancient
 #install -m 644 defaults/* %{buildroot}%{faxspool}/config/defaults/
 
-# hyla.conf - Need a new default - this one just sets fine mode 
+# hyla.conf - Need a new default - this one just sets fine mode
 #leaving it since it doesn't hurt
 install -m0644 hyla.conf %{buildroot}%{_datadir}/fax/hyla.conf
 
