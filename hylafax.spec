@@ -4,7 +4,7 @@
 
 %define faxspool    %{_var}/spool/fax
 
-Summary:	HylaFAX(tm) is a sophisticated enterprise strength fax package
+Summary:	Sophisticated enterprise strength fax package
 Name:		hylafax
 Version:	5.2.0
 Release:	%mkrel 2
