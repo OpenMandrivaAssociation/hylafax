@@ -91,7 +91,7 @@ This is the client portion of HylaFAX.
 
 %package -n	%{libname}
 Summary:	Hylafax libraries
-Group:		Communications
+Group:		System/Libraries
 
 %description -n %{libname}
 HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
@@ -417,7 +417,8 @@ rm -rf %buildroot
 %files -n %{libname}
 %defattr(-,root,root)
 %doc COPYRIGHT
-%{_libdir}/*.so.*
+%{_libdir}/*.so.%{major}
+%{_libdir}/*.so.%{major}.*
 
 %files -n %{develname}
 %defattr(-,root,root)
