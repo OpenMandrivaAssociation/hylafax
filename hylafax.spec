@@ -31,11 +31,17 @@ Requires:	ghostscript >= 7.07
 Requires:	gawk >= 3.0.6
 Requires:	MailTransportAgent
 Requires:	libtiff-progs >= 3.5.7
-BuildRequires: 	libjpeg-devel
-BuildRequires: 	libtiff-devel >= 3.5.7
-BuildRequires: 	zlib-devel
-BuildRequires: 	libpam-devel
-BuildRequires: 	jbig-devel
+BuildRequires:	ghostscript >= 7.07
+BuildRequires:	jbig-devel
+BuildRequires:	libjpeg-devel
+BuildRequires:	libpam-devel
+BuildRequires:	libtiff-devel >= 3.5.7
+BuildRequires:	libtiff-progs >= 3.5.7
+BuildRequires:	mgetty
+BuildRequires:	mgetty-voice
+BuildRequires:	sendmail-command
+BuildRequires:	sharutils
+BuildRequires:	zlib-devel
 Conflicts:	mgetty-sendfax
 Provides:	hylafax-mailgateway
 Obsoletes:	hylafax-mailgateway
@@ -190,6 +196,8 @@ export STRIP="/bin/true"
 
 %install
 [ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+
+export DONT_FIX_EOL=1
 
 install -d -m 755 %{buildroot}%{_sysconfdir}/{logrotate.d,cron.hourly,cron.daily}
 install -d -m 755 %{buildroot}%{_initrddir}
