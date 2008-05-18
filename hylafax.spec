@@ -6,8 +6,8 @@
 
 Summary:	Sophisticated enterprise strength fax package
 Name:		hylafax
-Version:	5.2.0
-Release:	%mkrel 3
+Version:	5.2.4
+Release:	%mkrel 1
 License: 	LGPL-style
 Group:		Communications
 URL: 		http://hylafax.sourceforge.net/
@@ -46,7 +46,7 @@ Conflicts:	mgetty-sendfax
 Provides:	hylafax-mailgateway
 Obsoletes:	hylafax-mailgateway
 Epoch:		1
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}buildroot
+BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
@@ -195,7 +195,7 @@ export STRIP="/bin/true"
 %make OPTIMIZER="$CFLAGS"
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
+rm -rf %{buildroot}
 
 export DONT_FIX_EOL=1
 
@@ -313,7 +313,7 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 %postun -n %{libname} -p /sbin/ldconfig
 
 %clean
-rm -rf %buildroot
+rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
