@@ -6,8 +6,8 @@
 
 Summary:	Sophisticated enterprise strength fax package
 Name:		hylafax
-Version:	5.2.4
-Release:	%mkrel 1
+Version:	5.2.5
+Release:	%mkrel 0.1
 License: 	LGPL-style
 Group:		Communications
 URL: 		http://hylafax.sourceforge.net/
@@ -159,6 +159,8 @@ cp %{SOURCE8} hyla.conf
 
 export STRIP="/bin/true"
 
+export LDFLAGS="-Wl,--as-needed"
+
 ./configure \
 	--target=%{_target_platform} \
 	--with-DIR_BIN=%{_bindir} \
@@ -192,7 +194,7 @@ export STRIP="/bin/true"
 # standard way would break things. Since OPTIMIZER is included in CFLAGS
 # by the HylaFAX configure system, it's used here in place of CFLAGS
 #make CFLAGS="$RPM_OPT_FLAGS"
-%make OPTIMIZER="$CFLAGS"
+%make OPTIMIZER="$CFLAGS -Wl,--as-needed -Wl,--no-undefined" LDFLAGS="\${LDOPTS} \${LDLIBS} -Wl,--as-needed -Wl,--no-undefined"
 
 %install
 rm -rf %{buildroot}
@@ -411,7 +413,6 @@ rm -rf %{buildroot}
 %{_sbindir}/edit-faxcover
 %{_datadir}/fax/pagesizes
 %{_datadir}/fax/faxcover.ps
-%{_datadir}/fax/faxcover_example_sgi.ps
 %{_datadir}/fax/typerules
 %config(noreplace) %{_datadir}/fax/hyla.conf
 %dir %{_datadir}/fax/faxmail
