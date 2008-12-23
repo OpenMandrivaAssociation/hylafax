@@ -1,3 +1,5 @@
+%define _disable_ld_no_undefined 1
+
 %define major 5
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname -d %{name}
@@ -6,7 +8,7 @@
 
 Summary:	Sophisticated enterprise strength fax package
 Name:		hylafax
-Version:	5.2.7
+Version:	5.2.8
 Release:	%mkrel 1
 License: 	LGPL-style
 Group:		Communications
@@ -27,6 +29,7 @@ Patch5:		hylafax-4.2.1-deps.patch
 Patch6:		hylafax-4.2.2-ghostscript_fonts.patch
 Patch7:		hylafax-no_rpath.diff
 Patch9:		hylafax-mailfax.diff
+Patch10:	hylafax-5.2.8-format_not_a_string_literal_and_no_format_arguments.diff
 Requires:	ghostscript >= 7.07
 Requires:	gawk >= 3.0.6
 Requires:	MailTransportAgent
@@ -141,6 +144,7 @@ This is the development librairies for HylaFAX.
 %patch6 -p1 -b .ghostscript
 %patch7 -p0 -b .no_rpath
 %patch9 -p1 -b .mailfax
+%patch10 -p0 -b .format_not_a_string_literal_and_no_format_arguments
 
 # path fix
 perl -pi -e "s|/usr/local/lib|%{_libdir}|g" configure
@@ -159,7 +163,7 @@ cp %{SOURCE8} hyla.conf
 
 export STRIP="/bin/true"
 
-export LDFLAGS="-Wl,--as-needed"
+export LDFLAGS="%{ldflags}"
 
 ./configure \
 	--target=%{_target_platform} \
