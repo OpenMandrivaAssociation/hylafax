@@ -33,12 +33,14 @@ Requires:	MailTransportAgent
 Requires:	libtiff-progs >= 3.5.7
 BuildRequires:	ghostscript >= 7.07
 BuildRequires:	jbig-devel
+BuildRequires:	lcms-devel
 BuildRequires:	libjpeg-devel
 BuildRequires:	libpam-devel
 BuildRequires:	libtiff-devel >= 3.5.7
 BuildRequires:	libtiff-progs >= 3.5.7
 BuildRequires:	mgetty
 BuildRequires:	mgetty-voice
+BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
 BuildRequires:	sharutils
 BuildRequires:	zlib-devel
