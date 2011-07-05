@@ -131,8 +131,7 @@ platforms including windows.
 This is the development librairies for HylaFAX.
 
 %prep
-
-%setup -q -n %{name}-%{version} -a 1 -a 2 -a 3
+%setup -q -a 1 -a 2 -a 3
 %patch1 -p1
 # (oe) set the soname
 %patch2 -p1 -b .LIBVERSION
