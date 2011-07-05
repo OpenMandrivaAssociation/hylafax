@@ -1,5 +1,3 @@
-%define _disable_ld_no_undefined 1
-
 %define major 5
 %define libname %mklibname %{name} %{major}
 %define develname %mklibname -d %{name}
@@ -192,7 +190,7 @@ export LDFLAGS="%{ldflags}"
 # standard way would break things. Since OPTIMIZER is included in CFLAGS
 # by the HylaFAX configure system, it's used here in place of CFLAGS
 #make CFLAGS="$RPM_OPT_FLAGS"
-%make OPTIMIZER="$CFLAGS -Wl,--as-needed -Wl,--no-undefined" LDFLAGS="\${LDOPTS} \${LDLIBS} -Wl,--as-needed -Wl,--no-undefined"
+%make OPTIMIZER="$CFLAGS %{ldflags}" LDFLAGS="\${LDOPTS} \${LDLIBS} %{ldflags}"
 
 %install
 export DONT_FIX_EOL=1
