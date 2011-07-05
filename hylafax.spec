@@ -20,8 +20,6 @@ Source3:	hylafax-v4.1-dialrules_extras.tar.bz2
 Source6: 	hylafax-v4.1-logrotate
 Source7:	hylafax-v4.1.1-init
 Source8:  	hylafax-v4.1.1-hyla.conf
-#This just makes it use position independant code (-fPIC) while building.  We should push this back to Darren.
-Patch0:		hylafax-v4.1.1-shlib-pic.chris.patch
 Patch1:		hylafax-4.1.8-ghostscript-location
 Patch2:		hylafax-LIBVERSION.diff
 Patch3:		hylafax-soname.diff
@@ -135,7 +133,6 @@ This is the development librairies for HylaFAX.
 %prep
 
 %setup -q -n %{name}-%{version} -a 1 -a 2 -a 3
-%patch0 -p1
 %patch1 -p1
 # (oe) set the soname
 %patch2 -p1 -b .LIBVERSION
