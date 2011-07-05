@@ -296,10 +296,6 @@ install -m0755 faxmail/mailfax.sh-smail %{buildroot}%{_bindir}/
 %post server
 %_post_service hylafax-server
 
-#Since perl.prov has problems with special files use this workaround to create FIFO file
-mkfifo -m 664 %{faxspool}/FIFO
-chown uucp:uucp %{faxspool}/FIFO
-
 # Adding faxgetty entry to %{_sysconfdir}/inittab
 logger adding FaxGetty entry to %{_sysconfdir}/inittab
 cat %{_sysconfdir}/inittab | grep -i "faxgetty entry" || \
@@ -350,7 +346,7 @@ rm -rf %{buildroot}
 %attr(-,uucp,uucp) %dir %{faxspool}/sendq
 %attr(-,uucp,uucp) %dir %{faxspool}/status
 %attr(-,uucp,uucp) %dir %{faxspool}/tmp
-#%attr(-,uucp,uucp) %{faxspool}/FIFO*
+%attr(-,uucp,uucp) %{faxspool}/FIFO*
 %attr(-,root,root) %{faxspool}/COPYRIGHT
 %{_sbindir}/faxlock
 %attr(-,uucp,uucp) %config(noreplace) %{faxspool}/etc/xferfaxlog
