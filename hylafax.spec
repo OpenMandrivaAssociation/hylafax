@@ -28,6 +28,7 @@ Patch6:		hylafax-4.2.2-ghostscript_fonts.patch
 Patch7:		hylafax-no_rpath.diff
 Patch9:		hylafax-mailfax.diff
 Patch10:	hylafax-5.2.8-format_not_a_string_literal_and_no_format_arguments.diff
+Patch11:	hylafax-5.5.0-pass-char-string-rather-than-c++-object.patch
 Requires:	ghostscript >= 7.07
 Requires:	gawk >= 3.0.6
 Requires:	MailTransportAgent
@@ -142,7 +143,7 @@ This is the development librairies for HylaFAX.
 %patch7 -p0 -b .no_rpath
 %patch9 -p1 -b .mailfax
 %patch10 -p0 -b .format_not_a_string_literal_and_no_format_arguments
-
+%patch11 -p1 -b .c_str~
 # path fix
 perl -pi -e "s|/usr/local/lib|%{_libdir}|g" configure
 
