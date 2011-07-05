@@ -48,7 +48,6 @@ Conflicts:	mgetty-sendfax
 Provides:	hylafax-mailgateway
 Obsoletes:	hylafax-mailgateway
 Epoch:		1
-BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
 
 %description
 HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
@@ -197,8 +196,6 @@ export LDFLAGS="%{ldflags}"
 %make OPTIMIZER="$CFLAGS -Wl,--as-needed -Wl,--no-undefined" LDFLAGS="\${LDOPTS} \${LDLIBS} -Wl,--as-needed -Wl,--no-undefined"
 
 %install
-rm -rf %{buildroot}
-
 export DONT_FIX_EOL=1
 
 install -d -m 755 %{buildroot}%{_sysconfdir}/{logrotate.d,cron.hourly,cron.daily}
@@ -306,25 +303,12 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 %preun server
 %_preun_service hylafax-server
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %doc CHANGES CONTRIBUTORS COPYRIGHT INSTALL README TODO VERSION
 %{_sbindir}/faxsetup
 %{_sbindir}/faxsetup.linux
 
 %files server
-%defattr(-,root,root)
 %doc README.urpmi
 %attr(0755,root,root) %{_initrddir}/hylafax-server
 %attr(0755,root,root) %{_sysconfdir}/cron.daily/hylafax
@@ -396,7 +380,6 @@ rm -rf %{buildroot}
 %{_mandir}/man8/*
 
 %files client
-%defattr(-,root,root)
 %doc faxmail/README
 %{_bindir}/sendfax
 %{_bindir}/sendpage
@@ -424,12 +407,10 @@ rm -rf %{buildroot}
 %{_mandir}/man1/*
 
 %files -n %{libname}
-%defattr(-,root,root)
 %doc COPYRIGHT
 %{_libdir}/*.so.%{major}
 %{_libdir}/*.so.%{major}.*
 
 %files -n %{develname}
-%defattr(-,root,root)
 %doc COPYRIGHT
 %{_libdir}/*.so
