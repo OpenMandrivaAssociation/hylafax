@@ -8,8 +8,8 @@
 
 Summary:	Sophisticated enterprise strength fax package
 Name:		hylafax
-Version:	5.2.9
-Release:	%mkrel 4
+Version:	5.5.0
+Release:	1
 License: 	LGPL-style
 Group:		Communications
 URL: 		http://hylafax.sourceforge.net/
