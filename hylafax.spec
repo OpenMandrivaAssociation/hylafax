@@ -68,7 +68,7 @@ Requires(post): rpm-helper
 Requires(preun): rpm-helper
 Requires:	%{name}
 Requires:	%{name}-client
-Requires:	%{libname} = %{epoch}:%{version}
+Requires:	%{libname} = %{EVRD}
 
 %description server
 HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
@@ -85,7 +85,7 @@ Group:		Communications
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
 Requires: 	%{name}
-Requires: 	%{libname} = %{epoch}:%{version}
+Requires: 	%{libname} = %{EVRD}
 
 %description	client
 HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
@@ -112,9 +112,9 @@ This is the shared librairies of HylaFAX.
 %package -n	%{develname}
 Summary:	Hylafax Development libraries
 Group:		Development/C
-Requires:	%{libname} = %{epoch}:%{version}
-Provides:	%{name}-devel = %{epoch}:%{version}
-Provides:	%{libname}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{libname} = %{EVRD}
+Provides:	%{name}-devel = %{EVRD}
+Provides:	%{libname}-devel = %{EVRD}
 Obsoletes:	%{libname}-devel
 Conflicts:	%{mklibname hylafax 4.1.1}-devel
 Conflicts:	%{mklibname hylafax 4.2.0}-devel
