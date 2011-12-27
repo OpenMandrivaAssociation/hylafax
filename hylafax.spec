@@ -32,9 +32,9 @@ Patch11:	hylafax-5.5.0-pass-char-string-rather-than-c++-object.patch
 BuildRequires:	ghostscript >= 7.07
 BuildRequires:	jbig-devel
 BuildRequires:	lcms-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	libpam-devel
-BuildRequires:	libtiff-devel >= 3.5.7
+BuildRequires:	jpeg-devel
+BuildRequires:	pam-devel
+BuildRequires:	tiff-devel >= 3.5.7
 BuildRequires:	libtiff-progs >= 3.5.7
 BuildRequires:	mgetty
 BuildRequires:	mgetty-voice
@@ -151,6 +151,9 @@ cp %{SOURCE8} hyla.conf
 
 %build
 %serverbuild
+# it does not work with -fPIE and someone added that to the serverbuild macro...
+CFLAGS=`echo $CFLAGS|sed -e 's|-fPIE||g'`
+CXXFLAGS=`echo $CXXFLAGS|sed -e 's|-fPIE||g'`
 
 %{?__cputoolize: %{__cputoolize}}
 # - Can't use the configure macro because does not understand --prefix
