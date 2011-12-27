@@ -6,6 +6,7 @@
 
 Summary:	Sophisticated enterprise strength fax package
 Name:		hylafax
+Epoch:		1
 Version:	5.5.0
 Release:	2
 License: 	LGPL-style
@@ -27,10 +28,7 @@ Patch7:		hylafax-no_rpath.diff
 Patch9:		hylafax-mailfax.diff
 Patch10:	hylafax-5.2.8-format_not_a_string_literal_and_no_format_arguments.diff
 Patch11:	hylafax-5.5.0-pass-char-string-rather-than-c++-object.patch
-Requires:	ghostscript >= 7.07
-Requires:	gawk >= 3.0.6
-Requires:	MailTransportAgent
-Requires:	libtiff-progs >= 3.5.7
+
 BuildRequires:	ghostscript >= 7.07
 BuildRequires:	jbig-devel
 BuildRequires:	lcms-devel
@@ -44,10 +42,14 @@ BuildRequires:	openldap-devel
 BuildRequires:	sendmail-command
 BuildRequires:	sharutils
 BuildRequires:	zlib-devel
+
+Requires:	ghostscript >= 7.07
+Requires:	gawk >= 3.0.6
+Requires:	MailTransportAgent
+Requires:	libtiff-progs >= 3.5.7
+
 Conflicts:	mgetty-sendfax
-Provides:	hylafax-mailgateway
-Obsoletes:	hylafax-mailgateway
-Epoch:		1
+%rename	hylafax-mailgateway
 
 %description
 HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
@@ -68,7 +70,6 @@ Requires(post): rpm-helper
 Requires(preun): rpm-helper
 Requires:	%{name}
 Requires:	%{name}-client
-Requires:	%{libname} = %{EVRD}
 
 %description server
 HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
@@ -85,7 +86,6 @@ Group:		Communications
 Requires(post): rpm-helper
 Requires(preun): rpm-helper
 Requires: 	%{name}
-Requires: 	%{libname} = %{EVRD}
 
 %description	client
 HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
@@ -407,8 +407,7 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 
 %files -n %{libname}
 %doc COPYRIGHT
-%{_libdir}/*.so.%{major}
-%{_libdir}/*.so.%{major}.*
+%{_libdir}/*.so.%{major}*
 
 %files -n %{develname}
 %doc COPYRIGHT
