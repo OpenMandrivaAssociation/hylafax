@@ -260,7 +260,7 @@ install -m0644 hylafax-server.logrotate %{buildroot}%{_sysconfdir}/logrotate.d/h
 # dialrules extras - Darren says the dialrules haven't changed
 install -m 644 dialrules_extras/dialrules* %{buildroot}%{faxspool}/etc
 
-(cd %{buildroot}%{faxspool}/bin; ln -s ps2fax.gs ps2fax)
+ln -s ps2fax.gs %{buildroot}%{faxspool}/bin/ps2fax
 
 /sbin/ldconfig -n %{buildroot}%_libdir
 
@@ -308,13 +308,6 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 %doc CHANGES CONTRIBUTORS COPYRIGHT INSTALL README TODO VERSION
 %{_sbindir}/faxsetup
 %{_sbindir}/faxsetup.linux
-
-%files server
-%doc README.urpmi
-%attr(0755,root,root) %{_initrddir}/hylafax-server
-%attr(0755,root,root) %{_sysconfdir}/cron.daily/hylafax
-%attr(0755,root,root) %{_sysconfdir}/cron.hourly/hylafax
-%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/hylafax-server
 %attr(-,uucp,uucp) %dir %{faxspool}
 %attr(-,uucp,uucp) %dir %{faxspool}/archive
 %attr(-,uucp,uucp) %dir %{faxspool}/bin
@@ -333,6 +326,13 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 %attr(-,uucp,uucp) %dir %{faxspool}/tmp
 %attr(-,uucp,uucp) %{faxspool}/FIFO*
 %attr(-,root,root) %{faxspool}/COPYRIGHT
+
+%files server
+%doc README.urpmi
+%attr(0755,root,root) %{_initrddir}/hylafax-server
+%attr(0755,root,root) %{_sysconfdir}/cron.daily/hylafax
+%attr(0755,root,root) %{_sysconfdir}/cron.hourly/hylafax
+%attr(0644,root,root) %config(noreplace) %{_sysconfdir}/logrotate.d/hylafax-server
 %{_sbindir}/faxlock
 %attr(-,uucp,uucp) %config(noreplace) %{faxspool}/etc/xferfaxlog
 %attr(-,uucp,uucp) %config(noreplace) %{faxspool}/etc/hosts.hfaxd
