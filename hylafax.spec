@@ -1,6 +1,6 @@
-%define major 5
-%define libname %mklibname %{name} %{major}
-%define develname %mklibname -d %{name}
+%define	major	5
+%define	libname	%mklibname %{name} %{major}
+%define	devname	%mklibname -d %{name}
 
 %define faxspool    %{_var}/spool/fax
 
@@ -66,8 +66,8 @@ Most users want mgetty-voice to be installed too.
 %package	server
 Summary:	The files for the HylaFAX(tm) fax server
 Group:		Communications
-Requires(post): rpm-helper
-Requires(preun): rpm-helper
+Requires(post):	rpm-helper
+Requires(preun):rpm-helper
 Requires:	%{name}
 Requires:	%{name}-client
 
@@ -83,8 +83,8 @@ This is the server portion of HylaFAX.
 %package	client
 Summary: 	The files for the HylaFAX(tm) fax client
 Group:		Communications
-Requires(post): rpm-helper
-Requires(preun): rpm-helper
+Requires(post):	rpm-helper
+Requires(preun):rpm-helper
 Requires: 	%{name}
 
 %description	client
@@ -109,7 +109,7 @@ platforms including windows.
 
 This is the shared librairies of HylaFAX.
 
-%package -n	%{develname}
+%package -n	%{devname}
 Summary:	Hylafax Development libraries
 Group:		Development/C
 Requires:	%{libname} = %{EVRD}
@@ -121,7 +121,7 @@ Conflicts:	%{mklibname hylafax 4.2.0}-devel
 Conflicts:	%{mklibname hylafax 4.2.2}-devel
 Conflicts:	%{mklibname hylafax 4.2.5}-devel
 
-%description -n	%{develname}
+%description -n	%{devname}
 HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
 2 fax modems on unix systems. It provides spooling services and numerous
 supporting fax management tools. The fax clients may reside on machines
@@ -411,6 +411,6 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 %doc COPYRIGHT
 %{_libdir}/*.so.%{major}*
 
-%files -n %{develname}
+%files -n %{devname}
 %doc COPYRIGHT
 %{_libdir}/*.so
