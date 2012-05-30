@@ -155,7 +155,6 @@ cp %{SOURCE8} hyla.conf
 CFLAGS=`echo $CFLAGS|sed -e 's|-fPIE||g'`
 CXXFLAGS=`echo $CXXFLAGS|sed -e 's|-fPIE||g'`
 
-%{?__cputoolize: %{__cputoolize}}
 # - Can't use the configure macro because does not understand --prefix
 # - A patch makes configure not to ask for a confirmation. An alternative would
 #   be to use --quiet, but this way all the configure output would be hidden
