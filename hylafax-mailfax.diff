@@ -1,0 +1,30 @@
+diff -Naur hylafax-5.1.3/faxmail/mailfax.sh-qmail hylafax-5.1.3.oden/faxmail/mailfax.sh-qmail
+--- hylafax-5.1.3/faxmail/mailfax.sh-qmail	2007-04-19 00:29:26.000000000 +0200
++++ hylafax-5.1.3.oden/faxmail/mailfax.sh-qmail	2007-05-10 13:41:37.000000000 +0200
+@@ -16,6 +16,6 @@
+ TMPVAR=${TMPVAR//\$\(/}
+ SENDER=${TMPVAR//\)/}
+ 
+-/local/fax/bin/faxmail | /local/fax/bin/sendfax \
++/usr/bin/faxmail | /usr/bin/sendfax \
+         -f "$SENDER" \
+         -d "$EXT2@`/usr/bin/expr \"$HOST\" : '\(.*\)\.fax$'`"
+diff -Naur hylafax-5.1.3/faxmail/mailfax.sh-sendmail hylafax-5.1.3.oden/faxmail/mailfax.sh-sendmail
+--- hylafax-5.1.3/faxmail/mailfax.sh-sendmail	2007-04-19 00:29:26.000000000 +0200
++++ hylafax-5.1.3.oden/faxmail/mailfax.sh-sendmail	2007-05-10 13:41:51.000000000 +0200
+@@ -57,4 +57,4 @@
+ #    software should process the submitted facsimile.  Consult the
+ #    faxmail documentation for details.
+ #
+-/usr/local/bin/faxmail -n -d "$1" "$2"
++/usr/bin/faxmail -n -d "$1" "$2"
+diff -Naur hylafax-5.1.3/faxmail/mailfax.sh-smail hylafax-5.1.3.oden/faxmail/mailfax.sh-smail
+--- hylafax-5.1.3/faxmail/mailfax.sh-smail	2007-04-19 00:29:26.000000000 +0200
++++ hylafax-5.1.3.oden/faxmail/mailfax.sh-smail	2007-05-10 13:42:03.000000000 +0200
+@@ -41,5 +41,5 @@
+ TMPVAR=${TMPVAR//\$\(/}
+ PRIMARY_NAME=${TMPVAR//\(/}
+ 
+-/usr/local/bin/faxmail | /usr/local/bin/sendfax -n -d \
++/usr/bin/faxmail | /usr/bin/sendfax -n -d \
+         "`/usr/bin/expr \"$ADDR\" : '\(.*\)\.fax$'`" -f "$SENDER@$PRIMARY_NAME"

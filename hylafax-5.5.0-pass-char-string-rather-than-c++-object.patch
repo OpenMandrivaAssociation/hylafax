@@ -1,0 +1,11 @@
+--- hylafax-5.5.0/util/TextFormat.c++~	2011-07-05 16:15:51.002759062 +0200
++++ hylafax-5.5.0/util/TextFormat.c++	2011-07-05 16:19:50.677459857 +0200
+@@ -1427,7 +1427,7 @@ TextFont::openAFMFile(fxStr& fontpath)
+ {
+     fxStr emsg;
+     if (!decodeFontName(family, fontpath, emsg)) {
+-	fprintf(stderr, "%s",emsg);
++	fprintf(stderr, "%s",emsg.c_str());
+         return NULL;
+     } 
+     return Sys::fopen(fontpath, "r");

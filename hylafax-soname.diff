@@ -1,0 +1,15 @@
+--- configure	2007-07-21 00:48:45.000000000 +0200
++++ configure.oden	2007-07-23 09:17:36.000000000 +0200
+@@ -3403,10 +3403,10 @@
+ 	else
+ 	    USE_RPATH=''
+ 	fi
+-	DSOSUF=so.$VERSION
++	DSOSUF=so
+ 	LIBFAXSERVER='${FAXD}/'$LIBFAXSERVER
+ 	FAXD='${DEPTH}/faxd'
+-	DSOOPTS='-shared -fpic -Wl,-soname,$@'
++	DSOOPTS='-shared -fpic -Wl,-soname,$@.5'
+ 	LLDOPTS='-L${UTIL} -L${FAXD} '$LIBUTIL$USE_RPATH
+ 	GCOPTS="${GCOPTS} -fpic"
+ 	GCXXOPTS="${GCXXOPTS} -fpic"

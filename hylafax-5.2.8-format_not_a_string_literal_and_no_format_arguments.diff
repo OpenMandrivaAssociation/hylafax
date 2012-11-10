@@ -1,0 +1,11 @@
+--- util/TextFormat.c++	2008-12-21 21:33:53.000000000 +0100
++++ util/TextFormat.c++.oden	2008-12-23 18:23:04.000000000 +0100
+@@ -1369,7 +1369,7 @@ TextFont::openAFMFile(fxStr& fontpath)
+ {
+     fxStr emsg;
+     if (!decodeFontName(family, fontpath, emsg)) {
+-	fprintf(stderr,emsg);
++	fprintf(stderr, "%s",emsg);
+         return NULL;
+     } 
+     return Sys::fopen(fontpath, "r");

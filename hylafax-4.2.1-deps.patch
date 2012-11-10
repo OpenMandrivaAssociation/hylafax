@@ -1,0 +1,79 @@
+--- hylafax-4.2.1/man/Makefile.in.deps	2003-05-10 18:18:14.000000000 +0200
++++ hylafax-4.2.1/man/Makefile.in	2005-09-07 08:15:07.000000000 +0200
+@@ -117,6 +117,9 @@ MANSFILE=sman.files/hylafax-server.4f	\
+ TARGETS=cman.apps/Makefile cman.files/Makefile \
+ 	sman.apps/Makefile sman.files/Makefile
+ 
++# Don't bother to parallel build those
++.NOTPARALLEL: $(TARGETS)
++
+ #
+ # System-specific manual page formatting commands should
+ # apply this sed command to the manual page source before
+--- hylafax-4.2.1/util/Makefile.in.deps	2004-08-16 14:58:22.000000000 +0200
++++ hylafax-4.2.1/util/Makefile.in	2005-09-07 08:02:03.000000000 +0200
+@@ -108,49 +108,50 @@ libfaxutil.a: ${OBJECTS}
+ 	${RANLIB} $@
+ ../util/libfaxutil.a: libfaxutil.a
+ 
+-faxmsg: ${SRCDIR}/faxmsg.c ${LIBS}
++LIBFAXUTIL = libfaxutil.${DSO} libfaxutil.so libfaxutil.a
++faxmsg: ${SRCDIR}/faxmsg.c ${LIBFAXUTIL} ${LIBS}
+ 	${CCF} -o $@ ${SRCDIR}/faxmsg.c ${LDFLAGS}
+-faxstate: ${SRCDIR}/faxstate.c ${LIBS}
++faxstate: ${SRCDIR}/faxstate.c ${LIBFAXUTIL} ${LIBS}
+ 	${CCF} -o $@ ${SRCDIR}/faxstate.c ${LDFLAGS}
+-faxmodem: ${SRCDIR}/faxmodem.c ${LIBS}
++faxmodem: ${SRCDIR}/faxmodem.c ${LIBFAXUTIL} ${LIBS}
+ 	${CCF} -o $@ ${SRCDIR}/faxmodem.c ${LDFLAGS}
+-faxadduser: ${SRCDIR}/faxadduser.c ${LIBS}
++faxadduser: ${SRCDIR}/faxadduser.c ${LIBFAXUTIL} ${LIBS}
+ 	${CCF} -o $@ ${SRCDIR}/faxadduser.c ${LDFLAGS}
+-faxconfig: ${SRCDIR}/faxconfig.c ${LIBS}
++faxconfig: ${SRCDIR}/faxconfig.c ${LIBFAXUTIL} ${LIBS}
+ 	${CCF} -o $@ ${SRCDIR}/faxconfig.c ${LDFLAGS}
+-faxdeluser: ${SRCDIR}/faxdeluser.c ${LIBS}
++faxdeluser: ${SRCDIR}/faxdeluser.c ${LIBFAXUTIL} ${LIBS}
+ 	${CCF} -o $@ ${SRCDIR}/faxdeluser.c ${LDFLAGS}
+ tiffcheck.o: ${SRCDIR}/tiffcheck.c++
+ 	${C++F} -c ${C++FILE} ${SRCDIR}/tiffcheck.c++@MAKECXXOVERRIDE@
+-tiffcheck: tiffcheck.o ${LIBS}
++tiffcheck: tiffcheck.o ${LIBFAXUTIL} ${LIBS}
+ 	${C++F} -o $@ tiffcheck.o ${LDFLAGS}
+ textfmt.o: ${SRCDIR}/textfmt.c++
+ 	${C++F} -c ${C++FILE} ${SRCDIR}/textfmt.c++@MAKECXXOVERRIDE@
+-textfmt: textfmt.o ${LIBS}
++textfmt: textfmt.o ${LIBFAXUTIL} ${LIBS}
+ 	${C++F} -o $@ textfmt.o ${LDFLAGS}
+ dialtest.o: ${SRCDIR}/dialtest.c++
+ 	${C++F} -c ${C++FILE} ${SRCDIR}/dialtest.c++@MAKECXXOVERRIDE@
+-dialtest: dialtest.o ${LIBS}
++dialtest: dialtest.o ${LIBFAXUTIL} ${LIBS}
+ 	${C++F} -o $@ dialtest.o ${LDFLAGS}
+ typetest.o: ${SRCDIR}/typetest.c++
+ 	${C++F} -c ${C++FILE} ${SRCDIR}/typetest.c++@MAKECXXOVERRIDE@
+-typetest: typetest.o ${LIBS}
++typetest: typetest.o ${LIBFAXUTIL} ${LIBS}
+ 	${C++F} -o $@ typetest.o ${LDFLAGS}
+ faxinfo.o: ${SRCDIR}/faxinfo.c++
+ 	${C++F} -c ${C++FILE} ${SRCDIR}/faxinfo.c++@MAKECXXOVERRIDE@
+-faxinfo: faxinfo.o ${LIBS}
++faxinfo: faxinfo.o ${LIBFAXUTIL} ${LIBS}
+ 	${C++F} -o $@ faxinfo.o ${LDFLAGS}
+ faxwatch.o: ${SRCDIR}/faxwatch.c++
+ 	${C++F} -c ${C++FILE} ${SRCDIR}/faxwatch.c++@MAKECXXOVERRIDE@
+-faxwatch: faxwatch.o ${LIBS}
++faxwatch: faxwatch.o ${LIBFAXUTIL} ${LIBS}
+ 	${C++F} -o $@ faxwatch.o ${LDFLAGS}
+-faxfetch: faxfetch.o ${LIBS}
++faxfetch: faxfetch.o ${LIBFAXUTIL} ${LIBS}
+ 	${C++F} -o $@ faxfetch.o ${LDFLAGS}
+ 
+ LDIRT=	checkat
+ checkat.o: ${SRCDIR}/checkat.c++
+ 	${C++F} -c ${C++FILE} ${SRCDIR}/checkat.c++@MAKECXXOVERRIDE@
+-checkat: checkat.o ${LIBS}
++checkat: checkat.o ${LIBFAXUTIL} ${LIBS}
+ 	${C++F} -o $@ checkat.o ${LDFLAGS}
+ 
+ PUTCLIENT	= ${INSTALL} -idb ${PRODUCT}.sw.client

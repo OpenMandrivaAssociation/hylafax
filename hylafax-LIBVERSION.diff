@@ -1,0 +1,55 @@
+diff -Naur hylafax-5.1.7/faxd/Makefile.LINUXdso hylafax-5.1.7.oden/faxd/Makefile.LINUXdso
+--- hylafax-5.1.7/faxd/Makefile.LINUXdso	2007-08-02 23:08:00.000000000 +0200
++++ hylafax-5.1.7.oden/faxd/Makefile.LINUXdso	2007-08-06 12:25:32.000000000 +0200
+@@ -32,15 +32,18 @@
+ LDIRT	+= libfaxserver.a
+ 
+ libfaxserver.${DSO}: ${SERVER_OBJS} ${MODEM_OBJS}
+-	${C++} ${DSOOPTS} -o libfaxserver.${DSO} \
+-	    ${SERVER_OBJS} ${MODEM_OBJS} ${DSODELAY} ../util/libfaxutil.${DSO} ${DSODELAY} ${LIBTIFF}
++	${C++} ${DSOOPTS} -o libfaxserver.${DSO}.${LIBVERSION} \
++	    ${SERVER_OBJS} ${MODEM_OBJS} ${LLDLIBS}
++	ln -sf libfaxserver.${DSO}.${LIBVERSION} libfaxserver.${DSO}
+ 
+ installDSO: libfaxserver.${DSO}
+-	${PUTSERV} -root ${INSTALLROOT} -F ${LIBDIR} -m 755 -O libfaxserver.${DSO}
+-	[ `id -u` -eq 0 ] && ( PATH=${PATH}:/sbin ldconfig ${LIBDIR} ) || ( echo "ldconfig is required to be run as user root at install time" )
++	${PUTSERV} -root ${INSTALLROOT} -F ${LIBDIR} -m 755 -O libfaxserver.${DSO}.${LIBVERSION}
++	${PUTSERV} -root ${INSTALLROOT} -F ${LIBDIR} -O -lns libfaxserver.${DSO}.${LIBVERSION} libfaxserver.${DSO}
+ 
+ uninstallDSO::
+ 	${RM} -f ${LIBDIR}/libfaxserver.${DSO}
++	${RM} -f ${LIBDIR}/libfaxserver.${DSO}.${LIBVERSION}
+ 
+ cleanDSO::
+ 	-${RM} -f libfaxserver.${DSO}
++	-${RM} -f libfaxserver.${DSO}.${LIBVERSION}
+diff -Naur hylafax-5.1.7/util/Makefile.LINUXdso hylafax-5.1.7.oden/util/Makefile.LINUXdso
+--- hylafax-5.1.7/util/Makefile.LINUXdso	2007-08-02 23:07:59.000000000 +0200
++++ hylafax-5.1.7.oden/util/Makefile.LINUXdso	2007-08-06 12:27:16.000000000 +0200
+@@ -31,15 +31,22 @@
+ #
+ 
+ libfaxutil.${DSO}: ${OBJECTS}
+-	${C++} ${DSOOPTS} -o libfaxutil.${DSO} ${OBJECTS} \
+-	    ${DSODELAY} ${LIBTIFF} ${DSODELAY} ${LIBZ} ${DSODELAY} ${LIBREGEX}
++	${C++} ${DSOOPTS} -o libfaxutil.${DSO}.${LIBVERSION} ${OBJECTS} \
++	    ${DSODELAY} ${LIBTIFF} ${DSODELAY} ${LIBZ} ${DSODELAY} ${LIBREGEX} \
++	    ${MACHDEPLIBS}
++	ln -sf libfaxutil.${DSO}.${LIBVERSION} libfaxutil.${DSO}
++
++../util/libfaxutil.${DSO}: libfaxutil.${DSO}
+ 
+ installDSO: libfaxutil.${DSO}
+-	${PUTCLIENT} -root ${INSTALLROOT} -F ${LIBDIR} -m 755 -O libfaxutil.${DSO}
++	${PUTCLIENT} -root ${INSTALLROOT} -F ${LIBDIR} -m 755 -O libfaxutil.${DSO}.${LIBVERSION}
++	${PUTCLIENT} -root ${INSTALLROOT} -F ${LIBDIR} -O -lns libfaxutil.${DSO}.${LIBVERSION} libfaxutil.${DSO}
+ 
+ uninstallDSO::
+ 	${RM} -f ${LIBDIR}/libfaxutil.${DSO}
++	${RM} -f ${LIBDIR}/libfaxutil.${DSO}.${LIBVERSION}
+ 
+ cleanDSO::
+ 	-${RM} -f libfaxutil.${DSO}
++	-${RM} -f libfaxutil.${DSO}.${LIBVERSION}
+ 

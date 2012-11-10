@@ -1,0 +1,22 @@
+--- hylafax-4.2.2/etc/faxsetup.sh.in.deush	2005-10-17 15:21:01.000000000 +0200
++++ hylafax-4.2.2/etc/faxsetup.sh.in	2005-10-17 15:21:46.000000000 +0200
+@@ -1229,19 +1229,6 @@
+ 		MATCH=$FDIR
+ 		break
+ 	fi
+-    else
+-	cat >&4 <<EOF
+-
+-
+-Warning: $FDIR does not exist or is not a directory!
+-
+-The directory $FDIR does not exist or this file is not a directory.
+-This is the directory where the HylaFAX client applications expect to
+-locate font metric information to use in formatting ASCII text for
+-submission as facsimile.  Without this information HylaFAX may generate
+-illegible facsimile from ASCII text.
+-
+-EOF
+     fi
+     done
+     if [ -z "$MATCH" ];then
