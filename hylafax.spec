@@ -414,3 +414,248 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 %files -n %{devname}
 %doc COPYRIGHT
 %{_libdir}/*.so
+
+
+%changelog
+* Wed May 30 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1:5.5.1-1
++ Revision: 801361
+- move spool directory to main package, otherwise faxsetup script will fail for
+  client package
+- minor cosmetics
+- drop dead %%cputoolize macro
+- new version
+
+  + Matthew Dawkins <mattydaw@mandriva.org>
+    - fixed BRs
+    - added fix for serverbuild macro
+    - some clean up of spec
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - rebuilt against libtiff.so.5
+
+* Tue Jul 05 2011 Per Øyvind Karlsen <peroyvind@mandriva.org> 1:5.5.0-1
++ Revision: 688911
+- enable ldap & lcms support
+- really link with %%ldflags
+- don't pass build dir to %%setup when it's already the default
+- use %%{EVRD} macro
+- drop legacy rpm stuff
+- ditch workaround for FIFO file in %%post, just include it in %%files now
+- fix attempt of passing c++ object rather than c-string to fprintf (P11)
+- don't pass tiff arguments to configure script, it breaks it for some reason,
+  and it's anyways able to auto-detect this by itself
+- ditch no longer required -fPIC patch (P0)
+- new version
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - rebuild
+
+* Sun Jan 10 2010 Oden Eriksson <oeriksson@mandriva.com> 1:5.2.9-3mdv2010.1
++ Revision: 488766
+- rebuilt against libjpeg v8
+
+* Sat Aug 15 2009 Oden Eriksson <oeriksson@mandriva.com> 1:5.2.9-2mdv2010.0
++ Revision: 416617
+- rebuilt against libjpeg v7
+
+* Sun Mar 01 2009 Emmanuel Andry <eandry@mandriva.org> 1:5.2.9-1mdv2009.1
++ Revision: 346377
+- New version 5.2.9
+
+* Sat Jan 31 2009 Oden Eriksson <oeriksson@mandriva.com> 1:5.2.8-2mdv2009.1
++ Revision: 335842
+- rebuilt against new jbigkit major
+
+* Tue Dec 23 2008 Oden Eriksson <oeriksson@mandriva.com> 1:5.2.8-1mdv2009.1
++ Revision: 318015
+- 5.2.8
+- use %%ldflags
+- fix build with -Werror=format-security (P10)
+
+* Sun Aug 10 2008 Oden Eriksson <oeriksson@mandriva.com> 1:5.2.7-1mdv2009.0
++ Revision: 270190
+- 5.2.7
+
+* Mon Jul 21 2008 Oden Eriksson <oeriksson@mandriva.com> 1:5.2.6-1mdv2009.0
++ Revision: 239499
+- 5.2.6
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Mon May 26 2008 Oden Eriksson <oeriksson@mandriva.com> 1:5.2.5-0.1mdv2009.0
++ Revision: 211357
+- 5.2.5
+- manually set -Wl,--as-needed -Wl,--no-undefined for now
+
+* Sun May 18 2008 Oden Eriksson <oeriksson@mandriva.com> 1:5.2.4-1mdv2009.0
++ Revision: 208711
+- 5.2.4
+
+* Thu Mar 27 2008 Oden Eriksson <oeriksson@mandriva.com> 1:5.2.0-3mdv2008.1
++ Revision: 190662
+- fix build deps
+- disable fix_eol because it just hangs
+
+  + Emmanuel Andry <eandry@mandriva.org>
+    - Fix lib group
+    - protect major
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+    - fix "foobar is blabla" summary (=> "blabla") so that it looks nice in rpmdrake
+
+* Wed Jan 23 2008 Thierry Vignaud <tv@mandriva.org> 1:5.2.0-2mdv2008.1
++ Revision: 157251
+- rebuild with fixed %%serverbuild macro
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+* Thu Dec 27 2007 Jérôme Soyer <saispo@mandriva.org> 1:5.2.0-1mdv2008.1
++ Revision: 138387
+- New release
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+* Fri Nov 30 2007 Oden Eriksson <oeriksson@mandriva.com> 1:5.1.12-1mdv2008.1
++ Revision: 114004
+- 5.1.12
+
+* Sun Nov 11 2007 Oden Eriksson <oeriksson@mandriva.com> 1:5.1.11-1mdv2008.1
++ Revision: 107512
+- 5.1.11
+
+* Fri Oct 12 2007 Oden Eriksson <oeriksson@mandriva.com> 1:5.1.9-1mdv2008.1
++ Revision: 97562
+- 5.1.9 (Minor feature enhancements)
+- drop P8, implemented upstream
+
+* Tue Aug 28 2007 Oden Eriksson <oeriksson@mandriva.com> 1:5.1.8-1mdv2008.0
++ Revision: 72878
+- 5.1.8
+- fix deps (jbig-devel)
+
+* Tue Aug 07 2007 Oden Eriksson <oeriksson@mandriva.com> 1:5.1.7-2mdv2008.0
++ Revision: 59741
+- fix #32347 (hylafax-server depends on hylafax-client but no dependencies are set)
+
+* Mon Aug 06 2007 Oden Eriksson <oeriksson@mandriva.com> 1:5.1.7-1mdv2008.0
++ Revision: 59286
+- 5.1.7
+- rediffed P2
+- removed the last hunk in P8
+- obey new devel naming specs
+
+* Mon Jul 23 2007 Oden Eriksson <oeriksson@mandriva.com> 1:5.1.6-1mdv2008.0
++ Revision: 54555
+- revert some stuff with P2 (why do they change this with each release???)
+- rediffed P3,P7,P8
+- use the new %%serverbuild macro
+- make it provide a usefull debug package
+- rediffed P3
+- 5.1.6
+
+* Sat Jun 23 2007 Oden Eriksson <oeriksson@mandriva.com> 1:5.1.5-1mdv2008.0
++ Revision: 43447
+- 5.1.5
+
+* Sun May 27 2007 Nicolas Lécureuil <nlecureuil@mandriva.com> 1:5.1.4-4mdv2008.0
++ Revision: 31885
+- Do not modify the inittab ( close bug #21975)
+- Fix group (#28134)
+
+* Sat May 26 2007 Nicolas Lécureuil <nlecureuil@mandriva.com> 1:5.1.4-2mdv2008.0
++ Revision: 31573
+- Do not overwrite conf file (#21179)
+
+* Tue May 15 2007 Oden Eriksson <oeriksson@mandriva.com> 1:5.1.4-1mdv2008.0
++ Revision: 26851
+- 5.1.4
+
+* Thu May 10 2007 Oden Eriksson <oeriksson@mandriva.com> 1:5.1.3-1mdv2008.0
++ Revision: 25963
+- 5.1.3
+
+
+* Fri Dec 22 2006 Oden Eriksson <oeriksson@mandriva.com> 5.0.2-1mdv2007.0
++ Revision: 101470
+- 5.0.2
+- new major (5)
+- drop upstream patches; P2
+- added P7 to remove rpath from the binaries
+
+* Fri Dec 22 2006 Oden Eriksson <oeriksson@mandriva.com> 1:4.3.0-1mdv2007.1
++ Revision: 101452
+- Import hylafax
+
+* Wed Jul 26 2006 Oden Eriksson <oeriksson@mandriva.com> 4.3.0-1mdv2007.1
+- 4.3.0
+
+* Tue Jun 13 2006 Oden Eriksson <oeriksson@mandriva.com> 4.3.0.3-1mdv2007.0
+- 4.3.0.3
+
+* Thu Feb 02 2006 Oden Eriksson <oeriksson@mandriva.com> 4.2.5.2-2mdk
+- fix attribs on the cron files (#20975)
+
+* Wed Feb 01 2006 Oden Eriksson <oeriksson@mandriva.com> 4.2.5.2-1mdk
+- 4.2.5.2 (includes fixes for CVE-2005-3538 and CVE-2005-3539)
+- fixes #16448 and #16527
+- html docs are not provided anymore
+- re-enabled a rediffed soname patch (P3)
+- misc rpmlint and spec file fixes
+
+* Wed Oct 19 2005 Daouda LO <daouda@mandriva.com> 4.2.2-1mdk
+- update to official 4.2.2 release
+- patch #4 (64 bit fixes) merged upstream 
+- spec cleanup 
+- fix #16448 #16527
+
+* Thu Sep 08 2005 Gwenole Beauchesne <gbeauchesne@mandriva.com> 4.2.1-2mdk
+- 64-bit fixes
+- make it parallel buildable (deps fixes)
+
+* Mon Jun 13 2005 Per Øyvind Karlsen <pkarlsen@mandriva.com> 4.2.1-1mdk
+- 4.2.1
+- drop P13 (merged upstream)
+- %%mkrel
+- fix requires
+
+* Thu Jan 13 2005 Daouda LO <daouda@mandrakesoft.com> 4.2.0-3mdk
+- security fix for CAN-2004-1182
+- versionned and bzipped patch
+
+* Sat Jan 01 2005 Oden Eriksson <oeriksson@mandrakesoft.com> 4.2.0-2mdk
+- added P12 (fix soname)
+- hacked the hylafax_daily.cron file to stop try to send mails if the
+  hylafax server is not running
+- added the same message as in %%post server to the init script
+- misc rpmlint fixes
+
+* Sat Sep 04 2004 Daouda LO <daouda@mandrakesoft.com> 4.2.0-1mdk
+- release 4.2.0:
+  o added Class 1 ECM and MMR support
+  o added Class 1.0 V.34-Fax (SuperG3) Support
+  o added software-driven real-time format compression conversion
+  o added extended resolution support
+  o removed the requirement for a case-sensitive filesystem to build
+  o unified the queue file numbering mechanism
+  o integrated Caller-ID/DID support throughout the software
+- * Wed Aug  4 2004 Bill Binko <bill@binko.net> 4.2.0-0.rc2.1mdk
+  - 4.2.0 RC2
+     o Updated to the Release Candidate
+     o renamed RPM per Daouda's advice
+
+* Fri Jan 16 2004 Daouda LO <daouda@mandrakesoft.com> 4.1.8-2mdk
+- Good permissions which prevent hylafax from working out of the box.
+
+* Tue Jan 06 2004 Daouda LO <daouda@mandrakesoft.com> 4.1.8-1mdk
+- 4.1.8
+  o fix PageChop feature (4.1.7)
+  o security fix (merged upstream)
+  o default libtiff v3.6 compatibility
+  o numerous bugfixes (several significant) and build cleanups
+- Create fifo files in post install
+- add clean section
+

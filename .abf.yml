@@ -1,8 +1,5 @@
 sources:
-  "hylafax-5.5.1.tar.gz:"	7ed0b864dd89689088c9a4256205afcb2444726b
-  "hylafax-v4.1.1-hyla.conf:"	ded2551db900b81e71969479676008bf9955a86f
-  "hylafax-v4.1.1-init:"	d634e95b6b8d3e12ff58b8ed5630230e66f19e7f
-  "hylafax-v4.1-cron_entries.tar.bz2:"	fe0ba360c1a3f109bbbdaa5fc322833961f5ea9d
-  "hylafax-v4.1-defaults.tar.bz2:"	c59a05acb78acd1167a7f00978f32fee79699060
-  "hylafax-v4.1-dialrules_extras.tar.bz2:"	3bee44f2aa4b81d3779e52532de3102de5d11974
-  "hylafax-v4.1-logrotate:"	eff8dfe511a5ebcfb7b9d4c4c7f989ab1d08f8a6
+  "hylafax-5.5.1.tar.gz": 7ed0b864dd89689088c9a4256205afcb2444726b
+  "hylafax-v4.1-cron_entries.tar.bz2": fe0ba360c1a3f109bbbdaa5fc322833961f5ea9d
+  "hylafax-v4.1-defaults.tar.bz2": c59a05acb78acd1167a7f00978f32fee79699060
+  "hylafax-v4.1-dialrules_extras.tar.bz2": 3bee44f2aa4b81d3779e52532de3102de5d11974
