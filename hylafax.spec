@@ -1,3 +1,5 @@
+%define __noautoreq '.*/bin/awk|.*/bin/gawk'
+
 %define	major	5
 %define	libname	%mklibname %{name} %{major}
 %define	devname	%mklibname -d %{name}
@@ -8,7 +10,7 @@ Summary:	Sophisticated enterprise strength fax package
 Name:		hylafax
 Epoch:		1
 Version:	5.5.1
-Release:	1
+Release:	2
 License: 	LGPL-style
 Group:		Communications
 Url: 		http://hylafax.sourceforge.net/
