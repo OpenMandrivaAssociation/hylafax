@@ -42,7 +42,7 @@ BuildRequires:	jpeg-devel
 BuildRequires:	openldap-devel
 BuildRequires:	pam-devel
 BuildRequires:	tiff-devel >= 3.5.7
-BuildRequires:	pkgconfig(lcms)
+BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(zlib)
 
 Requires:	gawk >= 3.0.6
