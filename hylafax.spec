@@ -1,6 +1,8 @@
+%global optflags %{optflags} -Wno-format-security
+
 %define __noautoreq '.*/bin/awk|.*/bin/gawk'
 
-%define	major	5
+%define	major	7
 %define	libname	%mklibname %{name} %{major}
 %define	devname	%mklibname -d %{name}
 
@@ -9,12 +11,12 @@
 Summary:	Sophisticated enterprise strength fax package
 Name:		hylafax
 Epoch:		1
-Version:	5.5.1
-Release:	12
+Version:	6.0.7
+Release:	1
 License: 	LGPL-style
 Group:		Communications
 Url: 		http://hylafax.sourceforge.net/
-Source0:	http://prdownloads.sourceforge.net/hylafax/%{name}-%{version}.tar.gz
+Source0:	ftp://ftp.hylafax.org/source/hylafax-%{version}.tar.gz
 Source1:	hylafax-v4.1-cron_entries.tar.bz2
 Source2:	hylafax-v4.1-defaults.tar.bz2
 Source3:	hylafax-v4.1-dialrules_extras.tar.bz2
@@ -22,11 +24,8 @@ Source6: 	hylafax-v4.1-logrotate
 Source7:	hylafax-v4.1.1-init
 Source8:  	hylafax-v4.1.1-hyla.conf
 Patch1:		hylafax-4.1.8-ghostscript-location
-Patch2:		hylafax-LIBVERSION.diff
-Patch3:		hylafax-soname.diff
 Patch5:		hylafax-4.2.1-deps.patch
 Patch6:		hylafax-4.2.2-ghostscript_fonts.patch
-Patch7:		hylafax-no_rpath.diff
 Patch9:		hylafax-mailfax.diff
 Patch10:	hylafax-5.2.8-format_not_a_string_literal_and_no_format_arguments.diff
 Patch11:	hylafax-5.5.0-pass-char-string-rather-than-c++-object.patch
@@ -49,6 +48,7 @@ Requires:	gawk >= 3.0.6
 Requires:	ghostscript >= 7.07
 Requires:	libtiff-progs >= 3.5.7
 Requires:	MailTransportAgent
+Obsoletes:	%{devname} < %{EVRD}
 
 %description
 HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
@@ -106,33 +106,15 @@ platforms including windows.
 
 This is the shared librairies of HylaFAX.
 
-%package -n	%{devname}
-Summary:	Hylafax Development libraries
-Group:		Development/C
-Requires:	%{libname} = %{EVRD}
-Provides:	%{name}-devel = %{EVRD}
-
-%description -n	%{devname}
-HylaFAX(tm) is a sophisticated enterprise-strength fax package for class 1 and
-2 fax modems on unix systems. It provides spooling services and numerous
-supporting fax management tools. The fax clients may reside on machines
-different from the server and client implementations exist for a number of
-platforms including windows.
-
-This is the development librairies for HylaFAX.
-
 %prep
 %setup -q -a 1 -a 2 -a 3
 %patch1 -p1
 # (oe) set the soname
-%patch2 -p1 -b .LIBVERSION
-%patch3 -p0 -b .soname
-%patch5 -p1 -b .deps
-%patch6 -p1 -b .ghostscript
-%patch7 -p0 -b .no_rpath
+#patch5 -p1 -b .deps
+#patch6 -p1 -b .ghostscript
 %patch9 -p1 -b .mailfax
-%patch10 -p0 -b .format_not_a_string_literal_and_no_format_arguments
-%patch11 -p1 -b .c_str~
+#patch10 -p0 -b .format_not_a_string_literal_and_no_format_arguments
+#patch11 -p1 -b .c_str~
 # path fix
 sed -i -e "s|/usr/local/lib|%{_libdir}|g" configure
 
@@ -296,7 +278,7 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 %_preun_service hylafax-server
 
 %files
-%doc CHANGES CONTRIBUTORS COPYRIGHT INSTALL README TODO VERSION
+%doc CONTRIBUTORS COPYRIGHT INSTALL README TODO VERSION
 %{_sbindir}/faxsetup
 %{_sbindir}/faxsetup.linux
 %attr(-,uucp,uucp) %dir %{faxspool}
@@ -333,6 +315,7 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 %attr(-,uucp,uucp) %config(noreplace) %{faxspool}/etc/dialrules*
 #
 %{faxspool}/bin/*
+%{faxspool}/etc/templates
 %{faxspool}/config/*
 %{_sbindir}/hfaxd
 %{_sbindir}/hylafax
@@ -366,6 +349,7 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 %{_sbindir}/tsitest
 %{_sbindir}/typetest
 %{_sbindir}/xferfaxstats
+%{_datadir}/fax/faxcover*.ps
 %{_datadir}/fax/faxmail.ps
 %{_datadir}/fax/hfaxd.conf
 %{_mandir}/man5/*
@@ -390,20 +374,8 @@ echo "Please run \"%{_sbindir}/faxsetup -server\" to configure your fax server"
 %{_datadir}/fax/faxcover.ps
 %{_datadir}/fax/typerules
 %config(noreplace) %{_datadir}/fax/hyla.conf
-%dir %{_datadir}/fax/faxmail
-%dir %{_datadir}/fax/faxmail/application
-%dir %{_datadir}/fax/faxmail/image
-%{_datadir}/fax/faxmail/application/octet-stream
-%{_datadir}/fax/faxmail/application/pdf
-%{_datadir}/fax/faxmail/image/tiff
 %{_mandir}/man1/*
 
 %files -n %{libname}
 %doc COPYRIGHT
-%{_libdir}/libfaxserver.so.%{major}*
-%{_libdir}/libfaxutil.so.%{major}*
-
-%files -n %{devname}
-%doc COPYRIGHT
-%{_libdir}/*.so
-
+%{_libdir}/libhylafax-6.0.so.%{major}*
