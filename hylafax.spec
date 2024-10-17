@@ -15,7 +15,7 @@ Version:	6.0.7
 Release:	2
 License: 	LGPL-style
 Group:		Communications
-Url: 		http://hylafax.sourceforge.net/
+Url: 		https://hylafax.sourceforge.net/
 Source0:	ftp://ftp.hylafax.org/source/hylafax-%{version}.tar.gz
 Source1:	hylafax-v4.1-cron_entries.tar.bz2
 Source2:	hylafax-v4.1-defaults.tar.bz2
